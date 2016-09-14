@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Melbourne Safety Visualization</title>
+	<title>Melbourne LGA Profile Visualization</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,8 @@
 
     <link rel="stylesheet" href="style.css" />
 
-	<style>
 
+	<style>
 		.info {
 			padding: 6px 8px;
 			font: 14px/16px Arial, Helvetica, sans-serif;
@@ -43,6 +43,9 @@
 	<div id="map"></div>
 
 	<script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
 
 	<script type="text/javascript" src="data.geojson"></script>
 	<script type="text/javascript">
@@ -64,7 +67,6 @@
 			id: 'mapbox.light'
 		}).addTo(map);
 
-
 		// control that shows state info on hover
 		var info = L.control();
 
@@ -75,8 +77,13 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>Victoria Local Government Areas (LGA) Safety</h4>' +  (props ?
-				'<b>' + props.lga + '</b><br />Popular Town:' + props.pop_town + ' <br />Crime Rank:' + props.crime_rank
+			this._div.innerHTML = '<h4>Victoria Local Government Areas (LGA) Profile</h4>' +  (props ?
+				'<b>' + props.lga + '</b>'
+                    + '<br />Popular Town: ' + props.pop_town
+                    + '<br />Crime Rank: ' + props.crime_rank
+                    + '<br />Safety Rank: ' + props.safe_rank
+                    + '<br />House Price Rank: ' + props.house_price_rank
+                    + '<br />Median House Price: $' + props.house_price
 				: 'Hover over a LGA');
 		};
 
@@ -159,6 +166,8 @@
 				labels = [],
 				from, to;
 
+            labels.push('Crime / 1K population');
+
 			for (var i = 0; i < grades.length; i++) {
 				from = grades[i];
 				to = grades[i + 1];
@@ -173,6 +182,13 @@
 		};
 
 		legend.addTo(map);
+
+        var lc = L.control.locate({
+            position: 'topleft',
+            strings: {
+                title: "Show me where I am, yo!"
+            }
+        }).addTo(map);
 
 	</script>
 </body>
