@@ -7,4 +7,4 @@ The data is from [Victoria state government](https://www.data.vic.gov.au/data/da
 
 ## More 
 * Related Links
-    + [Live Demo](http://remo.site/vicSafe/)
+    + [Live Demo](http://remo.site/vicLga/)
